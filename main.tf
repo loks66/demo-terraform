@@ -10,11 +10,30 @@ terraform {
 provider "aws" {
   region = "us-east-1"
 }
+variable "instance_type" {
+  default = "t2.medium"
+}
+data "aws_ami" "ubuntu" {
+  most_recent = true
 
-resource "aws_s3_bucket" "workspace_demo" {
-  bucket = "dock-${terraform.workspace}-bucket00005201200"
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+
+  owners = ["099720109477"] # Canonical
+}
+
+resource "aws_instance" "example" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = var.instance_type
+
   tags = {
-    Environment = terraform.workspace
-    Owner       = "Dock"
+    Name = "HelloWorld"
   }
 }
