@@ -11,7 +11,7 @@ provider "aws" {
   region = "us-east-1"
 }
 variable "instance_type" {
-  default = "t3.micro"
+  default = "t2.micro"
 }
 data "aws_ami" "ubuntu" {
   most_recent = true
