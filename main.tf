@@ -12,7 +12,7 @@ provider "aws" {
 }
 
 resource "aws_s3_bucket" "workspace_demo" {
-  bucket = "dock-${terraform.workspace}-bucket000052012"
+  bucket = "dock-${terraform.workspace}-bucket00005201200"
   tags = {
     Environment = terraform.workspace
     Owner       = "Dock"
